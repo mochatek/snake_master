@@ -1,5 +1,16 @@
 import arcade
 from random import randint
+from sys import platform
+if platform == "linux" or platform == "linux2" or platform == "darwin":
+    head_png = 'res/head.png'
+    body_png = 'res/Body.png'
+    tail_png = 'res/Tail.png'
+    frog_png = 'res/Frog.png'
+else:
+    head_png = 'res\head.png'
+    body_png = 'res\Body.png'
+    tail_png = 'res\Tail.png'
+    frog_png = 'res\Frog.png'
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 640
@@ -9,11 +20,11 @@ class Snake(arcade.Sprite):
     def __init__(self, xy, angle, part):
         super().__init__()
         self.textures = []
-        texture = arcade.load_texture('res\head.png')
+        texture = arcade.load_texture(head_png)
         self.textures.append(texture)
-        texture = arcade.load_texture('res\Body.png')
+        texture = arcade.load_texture(body_png)
         self.textures.append(texture)
-        texture = arcade.load_texture('res\Tail.png')
+        texture = arcade.load_texture(tail_png)
         self.textures.append(texture)
         self.scale = 0.25
         self.center_x = xy[0]
@@ -44,7 +55,7 @@ class MyGame(arcade.Window):
         self.snake.append(Snake((96,224), -90, 2))
         self.snake.append(Snake((112,224), -90, 1))
         self.snake.append(Snake((128,224), -90, 0))
-        self.frog.append(arcade.Sprite('res\Frog.png', 0.25, center_x=320, center_y=320))
+        self.frog.append(arcade.Sprite(frog_png, 0.25, center_x=320, center_y=320))
         self.game = 'Running'
 
     def on_draw(self):
@@ -90,7 +101,7 @@ class MyGame(arcade.Window):
             if self.frame % 120 == 0:
                 if len(self.frog) > 1:
                     self.frog[0].remove_from_sprite_lists()
-                frog = arcade.Sprite('res\Frog.png', 0.25)
+                frog = arcade.Sprite(frog_png, 0.25)
                 frog.center_x = randint(40, 600)
                 frog.center_y = randint(40, 640)
                 self.frog.append(frog)
